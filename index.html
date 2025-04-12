@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>London Crime Choropleth Map with Circle Packing</title>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f9f9f9;
+    color: #333;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    select, input[type="range"] {
+      padding: 5px;
+      font-size: 1rem;
+    }
+
+    #map {
+      width: 800px;
+      height: 600px;
+      margin: 0 auto;
+      border: 3px solid #000;
+      background: #ccc;
+      position: relative;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      pointer-events: none;
+      display: none;
+    }
+
+    .borough-label {
+      fill: #fff;             
+      font-size: 10px;
+      font-weight: bold;       
+      font-family: Arial, sans-serif;  
+      stroke: none;   
+    }
+
+    .legend-title{
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .header-container {
+      max-width: 1500px;
+      max-height: 500px;
+      margin: 1rem auto 1rem auto;
+      padding: 1.2rem 1.5rem;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: "Segoe UI", sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.2;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-container h1 {
+      margin-top: 0;
+      font-size: 1.6rem;
+      text-align: center;
+    }
+
+    .header-container .subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 1rem;
+    }
+
+    .header-container #data-info {
+      margin-top: 1rem;
+    }
+
+    .header-container #data-info h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .header-container #data-info p {
+      margin-bottom: 0.5rem;
+      text-align: justify;
+    }
+
+    .header-container a {
+      color: #3c4fcf;
+      text-decoration: underline;
+    }
+    .header-container a:hover {
+      color: #2a37aa;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1>How Safe Is London?</h1>
+      <p class="subtitle">
+        Use this interactive map to explore crime trends across boroughs and wards over the past decade.
+      </p>
+        <section id="data-info">
+          <p>
+            To explore both temporal trends (Q1) and spatial patterns and changes (Q2) in crime, two primary datasets were utilised:
+            <a href="https://data.london.gov.uk/dataset/recorded_crime_summary" target="_blank">MPS Recorded Crime: Geographic Breakdown</a> and 
+            <a href="https://data.london.gov.uk/dataset/mps-monthly-crime-dahboard-data" target="_blank">MPS Monthly Crime Dashboard</a>. 
+            Common fields, including crime types and area names, allowed for consistent mapping between them. 
+            For crime counts (Jan 2015 – Feb 2025), the Geographic Breakdown dataset was favoured due to its wide format, 
+            which facilitated the aggregation of monthly data into yearly totals. Data prior to 2015 was excluded, 
+            and historical and recent files were merged. Wards were mapped to boroughs using the 
+            <code>LookUp_BoroughName</code> field. Geographic boundaries were sourced from the 
+            <a href="https://data.london.gov.uk/dataset/london_boroughs" target="_blank">London Boroughs GeoPackage</a> 
+            and converted to GeoJSON for use in D3 visualisations. Visual and structural inspiration was drawn from the official 
+            <a href="https://www.london.gov.uk/programmes-strategies/mayors-office-policing-and-crime/data-and-statistics/crime-dashboard" target="_blank">London Crime Dashboard</a>.
+          </p>        
+        </section>
+      </details>
+    </div>
+    
+  </header>  
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="majorSelect">Major Crime Category:</label>
+      <select id="majorSelect" aria-label="Select Major Crime Category"></select>
+    </div>
+    <div class="control-group">
+      <label for="minorSelect">Minor Crime Category:</label>
+      <select id="minorSelect" aria-label="Select Minor Crime Category"></select>
+    </div>
+    <div class="control-group">
+      <label for="yearSlider">Year: <span id="yearLabel">2015</span></label>
+      <input type="range" id="yearSlider" min="2015" max="2025" step="1" value="2015" aria-label="Select Year">
+    </div>
+  </div>
+
+  <div id="map" aria-label="Map showing London Boroughs choropleth" role="img"></div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    // MAP Dimensions
+    const width = 800;
+    const height = 600;
+
+    // Global variables
+    let geoData, csvData, wardData;
+    let crimeMap = {};
+    let isWardView = false;
+    let currentBorough = null;
+    let projection, path;
+    let extraData = null;
+
+    //SVG Container
+    const svg = d3.select("#map")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    // Tooltip to display info on hover
+    const tooltip = d3.select("body")
+      .append("div")
+      .attr("class", "tooltip");
+
+    // Loads Required Datasets
+    Promise.all([
+      d3.json("London_Boroughs.geojson"),
+      d3.csv("MPS_Borough_Level_Merged.csv"),
+      d3.csv("MPS_Ward_Level_Merged.csv"),
+      d3.csv("result.csv")
+    ]).then(([geojson, boroughCsv, wardCsv, extraCsv]) => {
+      geoData = geojson;
+      csvData = boroughCsv;
+      wardData = wardCsv;
+      extraData = extraCsv;
+
+      // Fits GeoJSON data neatly within the SVG.
+      projection = d3.geoMercator().fitSize([width, height], geoData);
+      path = d3.geoPath().projection(projection);
+
+      // Builds Borough-level crime map
+      csvData.forEach(d => {
+        const { BoroughName, MajorText, MinorText } = d;
+        if (!crimeMap[BoroughName]) crimeMap[BoroughName] = {};
+        if (!crimeMap[BoroughName][MajorText]) crimeMap[BoroughName][MajorText] = {};
+        if (!crimeMap[BoroughName][MajorText][MinorText]) {
+          crimeMap[BoroughName][MajorText][MinorText] = {};
+        }
+        for (let year = 2015; year <= 2025; year++) {
+          crimeMap[BoroughName][MajorText][MinorText][year] = +d[year];
+        }
+      });
+
+      updateMajorDropdown();
+      updateMinorDropdown();
+
+      d3.select("#majorSelect").on("change", () => {
+        updateMinorDropdown();
+        isWardView ? showWardPacking(currentBorough) : updateChoropleth();
+      });
+      d3.select("#minorSelect").on("change", () => {
+        isWardView ? showWardPacking(currentBorough) : updateChoropleth();
+      });
+      d3.select("#yearSlider").on("input", function() {
+        d3.select("#yearLabel").text(this.value);
+        isWardView ? showWardPacking(currentBorough) : updateChoropleth();
+      });
+
+      drawMap();
+      updateChoropleth();
+    }).catch(error => console.error("Error loading data:", error));
+
+    // Major Crime Category Dropdown
+    function updateMajorDropdown() {
+      const majors = Array.from(new Set(csvData.map(d => d.MajorText))).sort();
+      const majorSelect = d3.select("#majorSelect");
+      majorSelect.selectAll("option").remove();
+      majorSelect.selectAll("option")
+        .data(majors)
+        .enter()
+        .append("option")
+        .attr("value", d => d)
+        .text(d => d);
+    }
+
+    // Minor Crime Category Dropdown based on Major Crime selected
+    function updateMinorDropdown() {
+      const selectedMajor = d3.select("#majorSelect").property("value");
+      const minors = Array.from(new Set(
+        csvData.filter(d => d.MajorText === selectedMajor)
+              .map(d => d.MinorText)
+      )).sort();
+
+      const minorSelect = d3.select("#minorSelect");
+      minorSelect.selectAll("option").remove();
+      minorSelect.selectAll("option")
+        .data(minors)
+        .enter()
+        .append("option")
+        .attr("value", d => d)
+        .text(d => d);
+    }
+
+    // Draws borough level map with interactive tooltips and labels
+    function drawMap() {
+      isWardView = false;
+      const boroughGroup = svg.append("g").attr("class", "boroughs");
+
+      boroughGroup.selectAll("path")
+        .data(geoData.features)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .attr("stroke", "#333")
+        .attr("fill", "#ccc")
+        .on("mousemove", function(event, d) {
+          // Based on selected Borough, crime type and year
+          const borough = d.properties.name;
+          const selectedMajor = d3.select("#majorSelect").property("value");
+          const selectedMinor = d3.select("#minorSelect").property("value");
+          const selectedYear = +d3.select("#yearSlider").property("value");
+          const count = getCrimeCount(borough, selectedMajor, selectedMinor, selectedYear);
+
+          // Displays Borough name and crime count on hover
+          let tooltipContent = `<strong>${borough}</strong><br>Crime Count: ${count ?? 0}`;
+
+          //Displays Offences and Positive Outcomes for years 2021 - 2025
+          if (selectedYear >= 2021 && selectedYear <= 2025) {
+            const { offences, positiveOutcomes } = getExtraCounts(borough, selectedYear);
+            tooltipContent += `<br>Offences: ${offences}<br>Positive Outcomes: ${positiveOutcomes}`;
+          }
+
+          tooltip
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY + 10) + "px")
+            .style("display", "inline-block")
+            .html(tooltipContent);
+        })
+        .on("mouseout", () => tooltip.style("display", "none"))
+        .on("click", function(event, d) {
+          // Displays ward level circle packing when clicked on a Borough
+          showWardPacking(d.properties.name); 
+        });
+
+      // Centers Borough name
+      boroughGroup.selectAll(".borough-label")
+        .data(geoData.features)
+        .enter()
+        .append("text")
+        .attr("class", "borough-label")
+        .attr("transform", d => `translate(${path.centroid(d)})`)
+        .attr("text-anchor", "middle")
+        .attr("dy", "0.35em")
+        .text(d => d.properties.name);
+    }
+
+    // Updates the choropleth map by recalculating crime counts and recoloring boroughs based on selected filters.
+    function updateChoropleth() {
+      const selectedMajor = d3.select("#majorSelect").property("value");
+      const selectedMinor = d3.select("#minorSelect").property("value");
+      const selectedYear = +d3.select("#yearSlider").property("value");
+
+      const boroughPaths = svg.select("g.boroughs").selectAll("path");
+
+      // get crime count for current selection
+      let counts = [];
+      boroughPaths.each(function(d) {
+        const borough = d.properties.name;
+        const count = getCrimeCount(borough, selectedMajor, selectedMinor, selectedYear);
+        if (!isNaN(count)) counts.push(count);
+      });
+
+      // Color Blind Friendly Palette : Viridis
+      const minCount = d3.min(counts) || 0;
+      const maxCount = d3.max(counts) || 0;
+      const colorScale = d3.scaleSequential(d3.interpolateViridis).domain([minCount, maxCount]);
+      svg.node().__colorScale__ = colorScale;
+      createOrUpdateLegend(minCount, maxCount, colorScale);
+
+      // Change borough colors based on crime count
+      boroughPaths.transition().duration(750)
+        .attr("fill", d => {
+          const borough = d.properties.name;
+          const count = getCrimeCount(borough, selectedMajor, selectedMinor, selectedYear);
+          return isNaN(count) ? "#ccc" : colorScale(count);
+        });
+    }
+
+    // Returns crime count for selected borough, crime type and year
+    function getCrimeCount(borough, major, minor, year) {
+      return crimeMap[borough]?.[major]?.[minor]?.[year];
+    }
+
+    // Returns count of offences and positive outcomes for years 2021 - 2025
+    function getExtraCounts(borough, year) {
+      if (!extraData) return { offences: 0, positiveOutcomes: 0 };
+
+      // Filter by Year and Borough
+      const filtered = extraData.filter(d => +d.Year === year && d.Borough === borough);
+
+      // Extracts offences and positive outcomes
+      let offences = 0;
+      let positiveOutcomes = 0;
+
+      filtered.forEach(d => {
+        if (d.Measure === "Offences") {
+          offences = +d.count;
+        } else if (d.Measure === "Positive Outcomes") {
+          positiveOutcomes = +d.count;
+        }
+      });
+
+      return { offences, positiveOutcomes };
+    }
+
+    // Legend: Dynamically updates scale and maps colour intensity to crime count. 
+    function createOrUpdateLegend(min, max, scale) {
+      const legendWidth = 200, legendHeight = 12;
+      svg.select("#legend").remove();
+      const legend = svg.append("g")
+        .attr("id", "legend")
+        .attr("transform", `translate(${width - legendWidth - 20}, ${height - 50})`);
+
+        // Legend Label
+        legend.append("text")
+        .attr("x", legendWidth / 2)
+        .attr("y", -8)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "12px")
+        .attr("fill", "#000")
+        .text("Crime Count");
+
+      // creates gradient for the color scale
+      const gradient = legend.append("defs")
+        .append("linearGradient")
+        .attr("id", "gradient");
+
+      // color stops for min, mid, and max values
+      gradient.selectAll("stop")
+        .data([
+          { offset: "0%", color: scale(min) },
+          { offset: "50%", color: scale((min + max) / 2) },
+          { offset: "100%", color: scale(max) }
+        ])
+        .enter().append("stop")
+        .attr("offset", d => d.offset)
+        .attr("stop-color", d => d.color);
+
+      // draws colour bar using gradient
+      legend.append("rect")
+        .attr("width", legendWidth)
+        .attr("height", legendHeight)
+        .style("fill", "url(#gradient)")
+        .style("stroke", "#ccc");
+
+      // axis to show numeric crime count values
+      const legendScale = d3.scaleLinear().domain([min, max]).range([0, legendWidth]);
+      legend.append("g")
+        .attr("transform", `translate(0, ${legendHeight})`)
+        .call(d3.axisBottom(legendScale).ticks(5));
+    }
+
+    // Circle Packing for detailed ward level data
+    function showWardPacking(borough) {
+      // switches to ward level view and stores selected borough
+      isWardView = true;
+      currentBorough = borough;
+
+      // clears existing svg
+      svg.selectAll("*").remove();
+      svg.style("background-color", "#ccc");
+
+      // gets selected values for crime type and year
+      const selectedMajor = d3.select("#majorSelect").property("value");
+      const selectedMinor = d3.select("#minorSelect").property("value");
+      const selectedYear = d3.select("#yearSlider").property("value");
+
+      // filters ward data for selected borough and crime category
+      const wards = wardData.filter(d =>
+        d.LookUp_BoroughName === borough &&
+        d.MajorText === selectedMajor &&
+        d.MinorText === selectedMinor
+      ).map(d => ({ name: d.WardName, value: +d[selectedYear] }));
+
+      // calculates min-max crime count to create colour scale. uses same viridis palette
+      const values = wards.map(d => d.value);
+      const minCount = d3.min(values) || 0;
+      const maxCount = d3.max(values) || 0;
+      const colorScale = d3.scaleSequential(d3.interpolateViridis).domain([minCount, maxCount]);
+
+      // Data for Circular packing
+      const data = { name: borough, children: wards };
+      const root = d3.hierarchy(data).sum(d => d.value);
+      const pack = d3.pack().size([width, height]).padding(5);
+      const nodes = pack(root).descendants();
+
+      // draws circle (one for each ward)
+      const group = svg.append("g");
+      group.selectAll("circle")
+        .data(nodes)
+        .enter()
+        .append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", d => d.r)
+        .attr("fill", d => d.children ? "#ccc" : colorScale(d.data.value))
+        .attr("stroke", "#444")
+        .attr("stroke-width", 3)
+        .on("mousemove", (event, d) => {
+          if (!d.children) {
+            // Ward name and Crime Count on hover
+            tooltip
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY + 10) + "px")
+              .style("display", "inline-block")
+              .html(`<strong>${d.data.name}</strong><br>Count: ${d.data.value}`);
+          }
+        })
+        .on("mouseout", () => tooltip.style("display", "none"));
+      
+      // fit ward names inside circle
+      group.selectAll("text")
+        .data(nodes.filter(d => !d.children && d.data.name.length < d.r / 2))
+        .enter()
+        .append("text")
+        .attr("x", d => d.x)
+        .attr("y", d => d.y)
+        .attr("dy", "0.3em")
+        .attr("text-anchor", "middle")
+        .style("pointer-events", "none")
+        .style("font-size", d => Math.min(d.r / 3, 14))
+        .style("fill", "#fff")
+        .text(d => d.data.name);
+
+      // Borough name in top right
+      svg.append("text")
+        .attr("x", width - 20)
+        .attr("y", 30)
+        .attr("text-anchor", "end")
+        .style("font-size", "18px")
+        .style("font-weight", "bold")
+        .text(borough);
+
+      // "Back" link to borough map
+      svg.append("text")
+        .attr("x", 20)
+        .attr("y", 30)
+        .style("cursor", "pointer")
+        .style("font-size", "14px")
+        .style("text-decoration", "underline")
+        .text("← Back to Borough Map")
+        .on("click", () => {
+          svg.selectAll("*").remove();
+          svg.style("background-color", null);
+          drawMap();
+          updateChoropleth();
+        });
+    }
+  </script>
+</body>
+</html>

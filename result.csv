@@ -1,0 +1,345 @@
+Year,Borough,Measure,count
+2021,Barking and Dagenham,Offences,3827
+2021,Barking and Dagenham,Positive Outcomes,1170
+2021,Barnet,Offences,4888
+2021,Barnet,Positive Outcomes,1378
+2021,Bexley,Offences,3133
+2021,Bexley,Positive Outcomes,886
+2021,Brent,Offences,4657
+2021,Brent,Positive Outcomes,1514
+2021,Bromley,Offences,4190
+2021,Bromley,Positive Outcomes,1184
+2021,Camden,Offences,4259
+2021,Camden,Positive Outcomes,1374
+2021,Croydon,Offences,5348
+2021,Croydon,Positive Outcomes,1664
+2021,Ealing,Offences,4940
+2021,Ealing,Positive Outcomes,1494
+2021,Enfield,Offences,4958
+2021,Enfield,Positive Outcomes,1488
+2021,Greenwich,Offences,4649
+2021,Greenwich,Positive Outcomes,1411
+2021,Hackney,Offences,4598
+2021,Hackney,Positive Outcomes,1580
+2021,Hammersmith and Fulham,Offences,4006
+2021,Hammersmith and Fulham,Positive Outcomes,1161
+2021,Haringey,Offences,4541
+2021,Haringey,Positive Outcomes,1418
+2021,Harrow,Offences,3765
+2021,Harrow,Positive Outcomes,1020
+2021,Havering,Offences,3658
+2021,Havering,Positive Outcomes,1116
+2021,Hillingdon,Offences,4159
+2021,Hillingdon,Positive Outcomes,1363
+2021,Hounslow,Offences,4422
+2021,Hounslow,Positive Outcomes,1446
+2021,Islington,Offences,3819
+2021,Islington,Positive Outcomes,1351
+2021,Kensington and Chelsea,Offences,3638
+2021,Kensington and Chelsea,Positive Outcomes,1051
+2021,Kingston upon Thames,Offences,2918
+2021,Kingston upon Thames,Positive Outcomes,768
+2021,Lambeth,Offences,5374
+2021,Lambeth,Positive Outcomes,1857
+2021,Lewisham,Offences,4271
+2021,Lewisham,Positive Outcomes,1368
+2021,Merton,Offences,3520
+2021,Merton,Positive Outcomes,954
+2021,N/K,Offences,277
+2021,N/K,Positive Outcomes,206
+2021,Newham,Offences,5123
+2021,Newham,Positive Outcomes,1831
+2021,Other / NK,Offences,277
+2021,Other / NK,Positive Outcomes,240
+2021,Redbridge,Offences,4421
+2021,Redbridge,Positive Outcomes,1272
+2021,Richmond upon Thames,Offences,3111
+2021,Richmond upon Thames,Positive Outcomes,661
+2021,Southwark,Offences,4886
+2021,Southwark,Positive Outcomes,1568
+2021,Sutton,Offences,3384
+2021,Sutton,Positive Outcomes,841
+2021,Tower Hamlets,Offences,4472
+2021,Tower Hamlets,Positive Outcomes,1647
+2021,Waltham Forest,Offences,4462
+2021,Waltham Forest,Positive Outcomes,1541
+2021,Wandsworth,Offences,4522
+2021,Wandsworth,Positive Outcomes,1355
+2021,Westminster,Offences,3985
+2021,Westminster,Positive Outcomes,1547
+2022,Barking and Dagenham,Offences,4261
+2022,Barking and Dagenham,Positive Outcomes,1361
+2022,Barnet,Offences,5344
+2022,Barnet,Positive Outcomes,1545
+2022,Bexley,Offences,3562
+2022,Bexley,Positive Outcomes,1041
+2022,Brent,Offences,5186
+2022,Brent,Positive Outcomes,1648
+2022,Bromley,Offences,4666
+2022,Bromley,Positive Outcomes,1387
+2022,Camden,Offences,4686
+2022,Camden,Positive Outcomes,1552
+2022,Croydon,Offences,5999
+2022,Croydon,Positive Outcomes,1800
+2022,Ealing,Offences,5420
+2022,Ealing,Positive Outcomes,1665
+2022,Enfield,Offences,5471
+2022,Enfield,Positive Outcomes,1652
+2022,Greenwich,Offences,5091
+2022,Greenwich,Positive Outcomes,1622
+2022,Hackney,Offences,5091
+2022,Hackney,Positive Outcomes,1805
+2022,Hammersmith and Fulham,Offences,4384
+2022,Hammersmith and Fulham,Positive Outcomes,1314
+2022,Haringey,Offences,4969
+2022,Haringey,Positive Outcomes,1525
+2022,Harrow,Offences,4118
+2022,Harrow,Positive Outcomes,1117
+2022,Havering,Offences,4119
+2022,Havering,Positive Outcomes,1315
+2022,Hillingdon,Offences,4586
+2022,Hillingdon,Positive Outcomes,1463
+2022,Hounslow,Offences,4941
+2022,Hounslow,Positive Outcomes,1479
+2022,Islington,Offences,4280
+2022,Islington,Positive Outcomes,1594
+2022,Kensington and Chelsea,Offences,4026
+2022,Kensington and Chelsea,Positive Outcomes,1246
+2022,Kingston upon Thames,Offences,3277
+2022,Kingston upon Thames,Positive Outcomes,849
+2022,Lambeth,Offences,5851
+2022,Lambeth,Positive Outcomes,1914
+2022,Lewisham,Offences,4704
+2022,Lewisham,Positive Outcomes,1589
+2022,Merton,Offences,3974
+2022,Merton,Positive Outcomes,1104
+2022,N/K,Offences,301
+2022,N/K,Positive Outcomes,246
+2022,Newham,Offences,5738
+2022,Newham,Positive Outcomes,2131
+2022,Other / NK,Offences,317
+2022,Other / NK,Positive Outcomes,286
+2022,Redbridge,Offences,4850
+2022,Redbridge,Positive Outcomes,1431
+2022,Richmond upon Thames,Offences,3467
+2022,Richmond upon Thames,Positive Outcomes,818
+2022,Southwark,Offences,5371
+2022,Southwark,Positive Outcomes,1762
+2022,Sutton,Offences,3742
+2022,Sutton,Positive Outcomes,958
+2022,Tower Hamlets,Offences,4940
+2022,Tower Hamlets,Positive Outcomes,1853
+2022,Waltham Forest,Offences,4823
+2022,Waltham Forest,Positive Outcomes,1645
+2022,Wandsworth,Offences,4912
+2022,Wandsworth,Positive Outcomes,1535
+2022,Westminster,Offences,4430
+2022,Westminster,Positive Outcomes,1756
+2023,Aviation Security,Offences,360
+2023,Aviation Security,Positive Outcomes,158
+2023,Barking and Dagenham,Offences,4312
+2023,Barking and Dagenham,Positive Outcomes,1301
+2023,Barnet,Offences,5404
+2023,Barnet,Positive Outcomes,1360
+2023,Bexley,Offences,3570
+2023,Bexley,Positive Outcomes,991
+2023,Brent,Offences,5234
+2023,Brent,Positive Outcomes,1546
+2023,Bromley,Offences,4686
+2023,Bromley,Positive Outcomes,1242
+2023,Camden,Offences,4732
+2023,Camden,Positive Outcomes,1432
+2023,Croydon,Offences,5999
+2023,Croydon,Positive Outcomes,1636
+2023,Ealing,Offences,5465
+2023,Ealing,Positive Outcomes,1505
+2023,Enfield,Offences,5488
+2023,Enfield,Positive Outcomes,1444
+2023,Greenwich,Offences,5187
+2023,Greenwich,Positive Outcomes,1448
+2023,Hackney,Offences,5111
+2023,Hackney,Positive Outcomes,1554
+2023,Hammersmith and Fulham,Offences,4525
+2023,Hammersmith and Fulham,Positive Outcomes,1236
+2023,Haringey,Offences,5000
+2023,Haringey,Positive Outcomes,1409
+2023,Harrow,Offences,4202
+2023,Harrow,Positive Outcomes,929
+2023,Havering,Offences,4238
+2023,Havering,Positive Outcomes,1252
+2023,Hillingdon,Offences,4428
+2023,Hillingdon,Positive Outcomes,1245
+2023,Hounslow,Offences,5123
+2023,Hounslow,Positive Outcomes,1405
+2023,Islington,Offences,4279
+2023,Islington,Positive Outcomes,1471
+2023,Kensington and Chelsea,Offences,4067
+2023,Kensington and Chelsea,Positive Outcomes,1066
+2023,Kingston upon Thames,Offences,3315
+2023,Kingston upon Thames,Positive Outcomes,814
+2023,Lambeth,Offences,5866
+2023,Lambeth,Positive Outcomes,1777
+2023,Lewisham,Offences,4768
+2023,Lewisham,Positive Outcomes,1547
+2023,Merton,Offences,4022
+2023,Merton,Positive Outcomes,1047
+2023,N/K,Offences,297
+2023,N/K,Positive Outcomes,241
+2023,Newham,Offences,5760
+2023,Newham,Positive Outcomes,1763
+2023,Other / NK,Offences,301
+2023,Other / NK,Positive Outcomes,265
+2023,Redbridge,Offences,4836
+2023,Redbridge,Positive Outcomes,1347
+2023,Richmond upon Thames,Offences,3539
+2023,Richmond upon Thames,Positive Outcomes,651
+2023,Southwark,Offences,5481
+2023,Southwark,Positive Outcomes,1641
+2023,Sutton,Offences,3782
+2023,Sutton,Positive Outcomes,844
+2023,Tower Hamlets,Offences,5019
+2023,Tower Hamlets,Positive Outcomes,1699
+2023,Waltham Forest,Offences,4957
+2023,Waltham Forest,Positive Outcomes,1388
+2023,Wandsworth,Offences,5068
+2023,Wandsworth,Positive Outcomes,1344
+2023,Westminster,Offences,4445
+2023,Westminster,Positive Outcomes,1634
+2024,Aviation Security,Offences,90
+2024,Aviation Security,Positive Outcomes,104
+2024,Barking and Dagenham,Offences,4306
+2024,Barking and Dagenham,Positive Outcomes,1177
+2024,Barnet,Offences,5391
+2024,Barnet,Positive Outcomes,1390
+2024,Bexley,Offences,3647
+2024,Bexley,Positive Outcomes,1009
+2024,Brent,Offences,5329
+2024,Brent,Positive Outcomes,1484
+2024,Bromley,Offences,4758
+2024,Bromley,Positive Outcomes,1206
+2024,Camden,Offences,4844
+2024,Camden,Positive Outcomes,1421
+2024,Croydon,Offences,6104
+2024,Croydon,Positive Outcomes,1555
+2024,Ealing,Offences,5580
+2024,Ealing,Positive Outcomes,1345
+2024,Enfield,Offences,5526
+2024,Enfield,Positive Outcomes,1421
+2024,Greenwich,Offences,5295
+2024,Greenwich,Positive Outcomes,1520
+2024,Hackney,Offences,5143
+2024,Hackney,Positive Outcomes,1548
+2024,Hammersmith and Fulham,Offences,4520
+2024,Hammersmith and Fulham,Positive Outcomes,1126
+2024,Haringey,Offences,4987
+2024,Haringey,Positive Outcomes,1362
+2024,Harrow,Offences,4260
+2024,Harrow,Positive Outcomes,958
+2024,Havering,Offences,4289
+2024,Havering,Positive Outcomes,1089
+2024,Hillingdon,Offences,4776
+2024,Hillingdon,Positive Outcomes,1257
+2024,Hounslow,Offences,5111
+2024,Hounslow,Positive Outcomes,1247
+2024,Islington,Offences,4306
+2024,Islington,Positive Outcomes,1434
+2024,Kensington and Chelsea,Offences,4102
+2024,Kensington and Chelsea,Positive Outcomes,1032
+2024,Kingston upon Thames,Offences,3117
+2024,Kingston upon Thames,Positive Outcomes,797
+2024,Lambeth,Offences,6013
+2024,Lambeth,Positive Outcomes,1579
+2024,Lewisham,Offences,4857
+2024,Lewisham,Positive Outcomes,1459
+2024,Merton,Offences,3920
+2024,Merton,Positive Outcomes,910
+2024,N/K,Offences,47
+2024,N/K,Positive Outcomes,176
+2024,Newham,Offences,5860
+2024,Newham,Positive Outcomes,1614
+2024,Other / NK,Offences,1335
+2024,Other / NK,Positive Outcomes,752
+2024,Redbridge,Offences,4894
+2024,Redbridge,Positive Outcomes,1189
+2024,Richmond upon Thames,Offences,3563
+2024,Richmond upon Thames,Positive Outcomes,678
+2024,Southwark,Offences,5456
+2024,Southwark,Positive Outcomes,1448
+2024,Sutton,Offences,3730
+2024,Sutton,Positive Outcomes,852
+2024,Tower Hamlets,Offences,5146
+2024,Tower Hamlets,Positive Outcomes,1572
+2024,Unknown,Offences,1
+2024,Waltham Forest,Offences,5036
+2024,Waltham Forest,Positive Outcomes,1261
+2024,Wandsworth,Offences,5001
+2024,Wandsworth,Positive Outcomes,1389
+2024,Westminster,Offences,4515
+2024,Westminster,Positive Outcomes,1552
+2025,Barking and Dagenham,Offences,341
+2025,Barking and Dagenham,Positive Outcomes,119
+2025,Barnet,Offences,449
+2025,Barnet,Positive Outcomes,135
+2025,Bexley,Offences,301
+2025,Bexley,Positive Outcomes,111
+2025,Brent,Offences,437
+2025,Brent,Positive Outcomes,161
+2025,Bromley,Offences,400
+2025,Bromley,Positive Outcomes,120
+2025,Camden,Offences,405
+2025,Camden,Positive Outcomes,166
+2025,Croydon,Offences,507
+2025,Croydon,Positive Outcomes,170
+2025,Ealing,Offences,463
+2025,Ealing,Positive Outcomes,144
+2025,Enfield,Offences,456
+2025,Enfield,Positive Outcomes,123
+2025,Greenwich,Offences,440
+2025,Greenwich,Positive Outcomes,167
+2025,Hackney,Offences,424
+2025,Hackney,Positive Outcomes,168
+2025,Hammersmith and Fulham,Offences,370
+2025,Hammersmith and Fulham,Positive Outcomes,116
+2025,Haringey,Offences,400
+2025,Haringey,Positive Outcomes,144
+2025,Harrow,Offences,333
+2025,Harrow,Positive Outcomes,108
+2025,Havering,Offences,341
+2025,Havering,Positive Outcomes,105
+2025,Hillingdon,Offences,397
+2025,Hillingdon,Positive Outcomes,148
+2025,Hounslow,Offences,411
+2025,Hounslow,Positive Outcomes,140
+2025,Islington,Offences,366
+2025,Islington,Positive Outcomes,145
+2025,Kensington and Chelsea,Offences,338
+2025,Kensington and Chelsea,Positive Outcomes,104
+2025,Kingston upon Thames,Offences,260
+2025,Kingston upon Thames,Positive Outcomes,76
+2025,Lambeth,Offences,500
+2025,Lambeth,Positive Outcomes,169
+2025,Lewisham,Offences,392
+2025,Lewisham,Positive Outcomes,169
+2025,Merton,Offences,329
+2025,Merton,Positive Outcomes,98
+2025,N/K,Positive Outcomes,10
+2025,Newham,Offences,488
+2025,Newham,Positive Outcomes,179
+2025,Other / NK,Offences,121
+2025,Other / NK,Positive Outcomes,86
+2025,Redbridge,Offences,405
+2025,Redbridge,Positive Outcomes,127
+2025,Richmond upon Thames,Offences,288
+2025,Richmond upon Thames,Positive Outcomes,94
+2025,Southwark,Offences,464
+2025,Southwark,Positive Outcomes,165
+2025,Sutton,Offences,302
+2025,Sutton,Positive Outcomes,87
+2025,Tower Hamlets,Offences,422
+2025,Tower Hamlets,Positive Outcomes,173
+2025,Waltham Forest,Offences,413
+2025,Waltham Forest,Positive Outcomes,151
+2025,Wandsworth,Offences,428
+2025,Wandsworth,Positive Outcomes,145
+2025,Westminster,Offences,380
+2025,Westminster,Positive Outcomes,153
